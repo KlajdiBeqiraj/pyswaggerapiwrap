@@ -1,7 +1,7 @@
 
 # PYSwaggerAPIWrap
 
-![PYSwaggerAPIWrap Logo](https://via.placeholder.com/150) <!-- Replace with the URL of your preferred image -->
+![PYSwaggerAPIWrap Logo](resources\image\logo_xsK_icon.ico) <!-- Replace with the URL of your preferred image -->
 
 ## Description
 
@@ -14,9 +14,21 @@
 - **Easy Integration**: Seamlessly integrate API calls into your Python project with an intuitive interface.
 - **Error Handling**: Manages API call errors and provides clear, helpful messages.
 
+## Python Version
+
+The version of Python used for the package is Python 3.9.7, but there are no specific constraints on the Python version.
+
+
 ## Installation
 
 You can install **PYSwaggerAPIWrap** using pip:
 
 ```bash
-pip install py-swagger-api-wrap
+pip install pyswaggerapiwrap
+```
+
+## Complete Tutorial
+
+For a complete tutorial, please refer to the notebook available at this link: test_http_client.ipynb
+
+
