@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pyswaggerapiwrap"
+version = "0.1.0"
+description = "Python wrapper for api with a swagger"
+authors = ["KlajdiBeqiraj <k.beqiraj@myw.ai>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = "^2.8.2"
+pandas = "^2.2.2"
+jupyterlab = "^4.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
