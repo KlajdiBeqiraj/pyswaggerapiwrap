@@ -1,7 +1,5 @@
+from PySwaggerAPIWrap import *  # pylint: disable=W0406
 from copy import copy
-from typing import Optional, Any
-
-from pydantic import BaseModel, Field, field_validator
 
 
 class AdditionalAPI:
