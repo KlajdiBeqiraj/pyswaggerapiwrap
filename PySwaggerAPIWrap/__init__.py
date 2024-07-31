@@ -1,15 +1,21 @@
+from typing import Any
+
 from PySwaggerAPIWrap import *  # pylint: disable=W0406
 from copy import copy
+from pydantic import BaseModel, Field
 
 
-class AdditionalAPI:
-    def __init__(self, original_route: str, method: str, fixed_route_params: dict):
-        self.fixed_route_params = fixed_route_params
-        self.method = method
-        self.original_route = original_route
+class AdditionalAPI(BaseModel):
+    original_route: str = Field(..., description="The original route.")
+    method: str = Field(..., description="Method used for the api")
+    fixed_route_params: dict = Field(..., description="The parameter you want to set")
+    new_route: str = Field(None, description="The new route")
+
+    def __init__(self, **data: Any):
+        super().__init__(**data)
         self.new_route = self.get_new_route()
 
-    def get_new_route(self):
+    def get_new_route(self) -> str:
         route_with_params = copy(self.original_route)
         for key_param in self.fixed_route_params:
             route_with_params = route_with_params.replace("{" + f"{key_param}" + "}",
@@ -42,3 +48,8 @@ ADDITIONAL_APIS = dict(
 )
 
 ADDITIONAL_APIS_NAME = list(ADDITIONAL_APIS.keys())
+
+
+def add_additional_api(new_api: AdditionalAPI, name: str):
+    ADDITIONAL_APIS.update({name: new_api})
+

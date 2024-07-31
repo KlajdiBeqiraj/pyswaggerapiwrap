@@ -21,7 +21,7 @@ def log_function_name(func):
     return wrapper
 
 
-def add_additional_apis(routes_df: pd.DataFrame):
+def add_additional_apis_to_df(routes_df: pd.DataFrame):
     """
     Adds additional APIs to the routes DataFrame based on the ADDITIONAL_APIS configuration.
 

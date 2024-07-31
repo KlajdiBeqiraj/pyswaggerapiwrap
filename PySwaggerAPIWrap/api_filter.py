@@ -3,7 +3,6 @@ from __future__ import annotations
 from PySwaggerAPIWrap import ADDITIONAL_APIS
 from PySwaggerAPIWrap.api_route import APIRoute
 import pandas as pd
-import numpy as np
 
 
 class APIDataFrameFilter:
