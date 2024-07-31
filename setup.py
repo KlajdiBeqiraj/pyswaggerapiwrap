@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='PySwaggerAPIWrap',
-    version='0.1.0',
+    version='0.1.1',
     description='A Python wrapper for API services that enables Swagger integration.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
