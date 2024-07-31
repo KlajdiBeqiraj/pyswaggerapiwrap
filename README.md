@@ -1,7 +1,7 @@
 
 # PYSwaggerAPIWrap
 
-![PYSwaggerAPIWrap Logo](resources\image\logo_xsK_icon.ico) <!-- Replace with the URL of your preferred image -->
+![PYSwaggerAPIWrap Logo](https://raw.githubusercontent.com/KlajdiBeqiraj/PySwaggerAPIWrap/main/resources/image/logo_xsK_icon.ico) <!-- Replace with the URL of your preferred image -->
 
 ## Description
 
@@ -53,7 +53,7 @@ Using this class, we can retrieve a pandas DataFrame containing all the informat
 ```python
 routes_dict = http_client.get_routes_df(swagger_route="/swagger.json")
 ```
-![get_routes_df](resources\image\get_routes_df.png)
+![get_routes_df](https://github.com/KlajdiBeqiraj/PySwaggerAPIWrap/blob/main/resources/image/get_routes_df.png?raw=true)
 
 ## API DataFrame Filter
 Through the API filter class, we can wrap this dictionary to navigate through all the APIs and find the one we are interested in.
@@ -74,7 +74,7 @@ We can use the **filter method** to filter our APIs in several ways:
 ```python
 api_filter.filter(method="GET", api_type="pet", route_pattern="id")
 ```
-![get_routes_df](resources\image\filter_method.png)
+![get_routes_df](https://github.com/KlajdiBeqiraj/PySwaggerAPIWrap/blob/main/resources/image/filter_method.png?raw=true)
 
 
 ### Api as attributes
