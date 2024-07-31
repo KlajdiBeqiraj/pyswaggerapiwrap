@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from PySwaggerAPIWrap import ADDITIONAL_APIS
 from PySwaggerAPIWrap.api_route import APIRoute
 import pandas as pd
 
@@ -15,12 +14,18 @@ class APIDataFrameFilter:
 
         if len(unique_routes) > 1:
             for route in unique_routes:
-                setattr(self, route, APIDataFrameFilter(self.df[self.df['api_type'] == route]))
+                try:
+                    setattr(self, route, APIDataFrameFilter(self.df[self.df['api_type'] == route]))
+                except ValueError:
+                    continue
         else:
             for i, route in enumerate(self.df["route"]):
                 param_name = self.df.iloc[i].method.lower() + route.replace(f"/{self.df.iloc[i].api_type}", "").replace("/", "_")
                 param_name = param_name.replace("{", "with_").replace("}", "")
-                setattr(self, param_name, self.df.iloc[i].api_route)
+                try:
+                    setattr(self, param_name, self.df.iloc[i].api_route)
+                except ValueError:
+                    continue
 
     def __getattr__(self, name):
         if name in self.__dict__:
@@ -103,7 +108,8 @@ class APIDataFrameFilter:
         return self.df.__repr__()
 
     def get_additional_api(self, key):
-        if key in ADDITIONAL_APIS:
-            route = ADDITIONAL_APIS[key].new_route
-            method = ADDITIONAL_APIS[key].method
+        from PySwaggerAPIWrap import AdditionalAPISContainer
+        if key in AdditionalAPISContainer.ADDITIONAL_APIS:
+            route = AdditionalAPISContainer.ADDITIONAL_APIS[key].new_route
+            method = AdditionalAPISContainer.ADDITIONAL_APIS[key].method
             return self.get_api(route=route, method=method)

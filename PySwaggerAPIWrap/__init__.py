@@ -33,23 +33,26 @@ class AdditionalAPI(BaseModel):
         return self.__str__()
 
 
-ADDITIONAL_APIS = dict(
-    # getDatasetList=AdditionalAPI(
-    #     original_route="/Dataset/get/DatasetsPagedByProjectId/{page}/{pageSize}/{sort}/{search}/{projectId}",
-    #     method="GET",
-    #     fixed_route_params=dict(
-    #         page=1,
-    #         pageSize=-1,
-    #         sort="empty",
-    #         search="empty"
-    #     )
-    # ),
+class AdditionalAPISContainer:
+    ADDITIONAL_APIS = dict(
+        # getDatasetList=AdditionalAPI(
+        #     original_route="/Dataset/get/DatasetsPagedByProjectId/{page}/{pageSize}/{sort}/{search}/{projectId}",
+        #     method="GET",
+        #     fixed_route_params=dict(
+        #         page=1,
+        #         pageSize=-1,
+        #         sort="empty",
+        #         search="empty"
+        #     )
+        # ),
 
-)
+    )
+    ADDITIONAL_APIS_NAME = list(ADDITIONAL_APIS.keys())
 
-ADDITIONAL_APIS_NAME = list(ADDITIONAL_APIS.keys())
+    @staticmethod
+    def add_additional_api(new_api: AdditionalAPI, name: str):
+        AdditionalAPISContainer.ADDITIONAL_APIS.update({name: new_api})
 
-
-def add_additional_api(new_api: AdditionalAPI, name: str):
-    ADDITIONAL_APIS.update({name: new_api})
-
+    @staticmethod
+    def get_additional_apis_name():
+        return list(AdditionalAPISContainer.ADDITIONAL_APIS)

@@ -1,7 +1,7 @@
 from copy import deepcopy
 import pandas as pd
 import requests
-from PySwaggerAPIWrap import ADDITIONAL_APIS
+from PySwaggerAPIWrap import AdditionalAPISContainer
 from logging import getLogger
 
 # Initialize logger for console output
@@ -35,8 +35,8 @@ def add_additional_apis_to_df(routes_df: pd.DataFrame):
     routes_df_2 = deepcopy(routes_df)
 
     # Iterate over each additional API configuration
-    for key in ADDITIONAL_APIS:
-        additional_dict = ADDITIONAL_APIS[key]
+    for key in AdditionalAPISContainer.ADDITIONAL_APIS:
+        additional_dict = AdditionalAPISContainer.ADDITIONAL_APIS[key]
 
         # Find the row that matches the original route and method
         new_api_df = deepcopy(routes_df_2[(routes_df_2['route'] == additional_dict.original_route) &

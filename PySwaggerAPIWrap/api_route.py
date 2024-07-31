@@ -2,6 +2,7 @@ import numpy as np
 
 from PySwaggerAPIWrap.http_client import HttpClient
 from copy import deepcopy
+import keyword
 
 
 class APIParam:
@@ -115,7 +116,15 @@ class APIRoute:
 
     def generate_call_method(self):
         param_names = [param.name for param in self.parameters]
-        params_str = ", ".join(param_names)
+
+        safe_param_names = []
+        for name in param_names:
+            if keyword.iskeyword(name):
+                safe_param_names.append(name + '_param')
+            else:
+                safe_param_names.append(name)
+
+        params_str = ", ".join(safe_param_names)
         code = f"""def __call__(self, http_client: 'HttpClient', {params_str}):
         route_params = locals()
         route_params.pop('self')
