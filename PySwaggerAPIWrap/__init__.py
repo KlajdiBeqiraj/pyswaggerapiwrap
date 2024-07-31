@@ -80,7 +80,9 @@ class AdditionalAPISContainer(BaseModel):
         ADDITIONAL_APIS (dict): A dictionary to store additional APIs by name.
     """
 
-    ADDITIONAL_APIS = Field({}, description="Dictionary with all the additional APIs.")
+    ADDITIONAL_APIS: dict = Field(
+        {}, description="Dictionary with all the additional APIs."
+    )
 
     @staticmethod
     def add_additional_api(new_api: AdditionalAPI, name: str):
