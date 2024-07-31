@@ -1,11 +1,13 @@
-from copy import deepcopy
-import pandas as pd
-import requests
-from PySwaggerAPIWrap import AdditionalAPISContainer
-from logging import getLogger
+"""
+all utils of the PySwaggerAPIWrap
+"""
 
-# Initialize logger for console output
-logger = getLogger("console")
+from copy import deepcopy
+
+import pandas as pd  # pylint: disable=import-error
+import requests  # pylint: disable=import-error
+
+from PySwaggerAPIWrap import AdditionalAPISContainer
 
 
 def log_function_name(func):
@@ -15,7 +17,7 @@ def log_function_name(func):
 
     def wrapper(*args, **kwargs):
         # Log the function name
-        logger.info("WebApiHandler calling: %s", func.__name__)
+        print(f"WebApiHandler calling: {func.__name__}")
         return func(*args, **kwargs)
 
     return wrapper
@@ -39,13 +41,20 @@ def add_additional_apis_to_df(routes_df: pd.DataFrame):
         additional_dict = AdditionalAPISContainer.ADDITIONAL_APIS[key]
 
         # Find the row that matches the original route and method
-        new_api_df = deepcopy(routes_df_2[(routes_df_2['route'] == additional_dict.original_route) &
-                                          (routes_df_2['method'] == additional_dict.method)].iloc[0])
+        new_api_df = deepcopy(
+            routes_df_2[
+                (routes_df_2["route"] == additional_dict.original_route)
+                & (routes_df_2["method"] == additional_dict.method)
+            ].iloc[0]
+        )
 
         # Update the route and remove fixed route parameters
         new_api_df["route"] = additional_dict.new_route
-        new_api_df["parameters"] = [param for param in new_api_df["parameters"] if
-                                    param['name'] not in list(additional_dict.fixed_route_params.keys())]
+        new_api_df["parameters"] = [
+            param
+            for param in new_api_df["parameters"]
+            if param["name"] not in list(additional_dict.fixed_route_params.keys())
+        ]
 
         # Append the new API to the DataFrame
         routes_df_2 = pd.concat([routes_df_2, pd.DataFrame(new_api_df).T], axis=0)
@@ -71,7 +80,7 @@ def find_swagger_json(base_url):
         "/swagger.json",
         "/v2/swagger.json",
         "/api/swagger.json",
-        "/docs/swagger.json"
+        "/docs/swagger.json",
     ]
 
     # Check each common path for the Swagger JSON
@@ -79,13 +88,16 @@ def find_swagger_json(base_url):
         url = base_url.rstrip("/") + path
         try:
             response = requests.get(url)
-            if response.status_code == 200 and response.headers['Content-Type'] == 'application/json':
-                logger.info(f"Found Swagger JSON at: {url}")
+            if (
+                response.status_code == 200
+                and response.headers["Content-Type"] == "application/json"
+            ):
+                print(f"Found Swagger JSON at: {url}")
                 return response.json()
-        except requests.RequestException as e:
-            logger.error(f"Error accessing {url}: {e}")
+        except requests.RequestException as error:
+            print(f"Error accessing {url}: {error}")
 
-    logger.error("Swagger JSON not found.")
+    print("Swagger JSON not found.")
     return None
 
 
@@ -99,24 +111,26 @@ def get_swagger_df(swagger_json):
     Returns:
     - A DataFrame containing API route information.
     """
-    paths = swagger_json.get('paths', {})
+    paths = swagger_json.get("paths", {})
     routes_data = []
 
     # Extract route information from the Swagger JSON
     for path, methods in paths.items():
         for method, details in methods.items():
-            parameters = details.get('parameters', [])
+            parameters = details.get("parameters", [])
             route = {
-                'api_type': path.split("/")[1],
-                'route': path,
-                'method': method.upper(),
-                'parameters': [
+                "api_type": path.split("/")[1],
+                "route": path,
+                "method": method.upper(),
+                "parameters": [
                     {
-                        'name': param.get('name'),
-                        'param_type': param.get('schema', {}).get('type') or param.get('type'),
-                        'is_required': param.get('required', False),
-                        'in': param.get('in', False),
-                    } for param in parameters
+                        "name": param.get("name"),
+                        "param_type": param.get("schema", {}).get("type")
+                        or param.get("type"),
+                        "is_required": param.get("required", False),
+                        "in": param.get("in", False),
+                    }
+                    for param in parameters
                 ],
             }
             routes_data.append(route)

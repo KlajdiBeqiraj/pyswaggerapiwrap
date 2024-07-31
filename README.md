@@ -70,7 +70,7 @@ We can use the **filter method** to filter our APIs in several ways:
 1. **By api_type**: In this case, the APIs are divided based on the first key. For example, in the APIs from the notebook (“https://petstore.swagger.io/v2”), we have pet, user, and store.
 2. **By route_pattern**: This allows us to retrieve all APIs that contain the specified string within their route.
 3. **By method**: We can filter by HTTP methods such as GET and POST.
-4. 
+4.
 ```python
 api_filter.filter(method="GET", api_type="pet", route_pattern="id")
 ```
@@ -102,7 +102,7 @@ The API located at the route "/pet/{petId}/uploadImage" and of type POST can be 
 api_filter.pet.post_with_petId_uploadImage
 ```
 
-## Run API 
+## Run API
 To call an API once we have identified the one we are interested in, we simply call the run method. This method dynamically takes both path and query parameters as inputs.
 
 To understand, let’s show two examples:
@@ -150,7 +150,3 @@ data
 
 
 ```
-
-
-
-

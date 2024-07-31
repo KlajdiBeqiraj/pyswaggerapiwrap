@@ -1,0 +1,8 @@
+[MASTER]
+
+[MESSAGES CONTROL]
+disable=E0401,  # Unable to import module
+        C0301,  # Line too long
+        C0103,
+        W0122,
+        C2801,
