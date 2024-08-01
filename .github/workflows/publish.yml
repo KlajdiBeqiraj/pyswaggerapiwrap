@@ -25,6 +25,13 @@ jobs:
           poetry install
           poetry add --dev bump2version
 
+      - name: Add and commit changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add pyproject.toml poetry.lock
+          git commit -m "Update dependencies"
+
       - name: Bump version
         run: |
           poetry run bump2version patch
@@ -39,6 +46,12 @@ jobs:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: poetry publish --username $TWINE_USERNAME --password $TWINE_PASSWORD
+
+      - name: Push changes and tags
+        run: |
+          git push origin main --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         id: create_release
