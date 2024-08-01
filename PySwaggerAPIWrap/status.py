@@ -18,7 +18,7 @@ def save_status(file_path: str, http_client: HttpClient, routes_dict: pd.DataFra
     :param file_path:
     :return:
     """
-    status = dict(routes_dict=routes_dict, http_client=http_client)
+    status = {"routes_dict": routes_dict, "http_client": http_client}
 
     with open(file_path, "wb") as file:
         pickle.dump(status, file)
