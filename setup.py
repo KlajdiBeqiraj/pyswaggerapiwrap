@@ -12,7 +12,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="pyswaggerapiwrap",
-    version="0.1.6",
+    version="0.1.7",
     description="A Python wrapper for API services that enables Swagger integration.",
     long_description=long_description,
     long_description_content_type="text/markdown",
