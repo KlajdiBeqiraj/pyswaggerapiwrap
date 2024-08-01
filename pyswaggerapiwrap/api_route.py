@@ -7,7 +7,7 @@ from copy import deepcopy
 
 import numpy as np
 
-from PySwaggerAPIWrap.http_client import HttpClient
+from pyswaggerapiwrap.http_client import HttpClient
 
 
 class APIParam:

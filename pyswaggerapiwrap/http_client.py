@@ -7,7 +7,7 @@ from typing import Optional
 import requests  # pylint: disable=import-error
 from pydantic import BaseModel, Field
 
-from PySwaggerAPIWrap.utils import find_swagger_json, get_swagger_df
+from pyswaggerapiwrap.utils import find_swagger_json, get_swagger_df
 
 
 class HttpClient(BaseModel):

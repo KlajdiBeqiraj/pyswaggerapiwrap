@@ -8,7 +8,7 @@ from copy import deepcopy
 
 import pandas as pd
 
-from PySwaggerAPIWrap.api_route import APIRoute
+from pyswaggerapiwrap.api_route import APIRoute
 
 
 class APIDataFrameFilter:
@@ -239,7 +239,7 @@ class APIDataFrameFilter:
             None or APIRoute: The APIRoute object if
             found; otherwise, None.
         """
-        from PySwaggerAPIWrap.additional_apis import AdditionalAPISContainer
+        from pyswaggerapiwrap.additional_apis import AdditionalAPISContainer
 
         if key in AdditionalAPISContainer.ADDITIONAL_APIS:
             route = AdditionalAPISContainer.ADDITIONAL_APIS[key].new_route

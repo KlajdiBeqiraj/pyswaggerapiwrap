@@ -1,5 +1,5 @@
 """
-all utils of the PySwaggerAPIWrap
+all utils of the pyswaggerapiwrap
 """
 
 from copy import deepcopy
@@ -7,7 +7,7 @@ from copy import deepcopy
 import pandas as pd  # pylint: disable=import-error
 import requests  # pylint: disable=import-error
 
-from PySwaggerAPIWrap.additional_apis import AdditionalAPISContainer
+from pyswaggerapiwrap.additional_apis import AdditionalAPISContainer
 
 
 def add_additional_apis_to_df(routes_df: pd.DataFrame):

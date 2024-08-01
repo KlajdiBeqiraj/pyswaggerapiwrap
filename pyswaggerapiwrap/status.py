@@ -6,8 +6,8 @@ import pickle
 
 import pandas as pd
 
-from PySwaggerAPIWrap.api_filter import APIDataFrameFilter
-from PySwaggerAPIWrap.http_client import HttpClient
+from pyswaggerapiwrap.api_filter import APIDataFrameFilter
+from pyswaggerapiwrap.http_client import HttpClient
 
 
 def save_status(file_path: str, http_client: HttpClient, routes_dict: pd.DataFrame):

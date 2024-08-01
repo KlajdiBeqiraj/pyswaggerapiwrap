@@ -37,7 +37,7 @@ For a complete tutorial, please refer to the notebook available at this link: [T
 The following lines of code import the `HttpClient` class from the `PySwaggerAPIWrap.http_client` module and set up an HTTP client with a specific endpoint and authentication token.
 
 ```python
-from PySwaggerAPIWrap.http_client import HttpClient
+from pyswaggerapiwrap.http_client import HttpClient
 
 ENDPOINT = "https://petstore.swagger.io/v2"
 AUTH_TOKEN = "special-key"
@@ -59,8 +59,10 @@ routes_dict = http_client.get_routes_df(swagger_route="/swagger.json")
 Through the API filter class, we can wrap this dictionary to navigate through all the APIs and find the one we are interested in.
 
 First, we create the object by passing the DataFrame as follows:
+
 ```python
-from PySwaggerAPIWrap.api_filter import APIDataFrameFilter
+from pyswaggerapiwrap.api_filter import APIDataFrameFilter
+
 api_filter = APIDataFrameFilter(routes_dict)
 ```
 
@@ -174,8 +176,9 @@ api_filter = APIDataFrameFilter(routes_dict)
 ```
 
 Save the status
+
 ```python
-from PySwaggerAPIWrap.status import Status, save_status, load_status
+from pyswaggerapiwrap.status import Status, save_status, load_status
 
 file_path = os.path.join("resources", "saved_data", "status.psw")
 save_status(file_path, http_client=http_client, routes_dict=routes_dict)

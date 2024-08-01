@@ -4,7 +4,7 @@ test the saving and loading the status
 
 import os
 
-from PySwaggerAPIWrap.status import load_status, save_status
+from pyswaggerapiwrap.status import load_status, save_status
 from tests.test_basic_functions import API_FILTER, HTTP_CLIENT_OBJ, ROUTES_DICT
 
 

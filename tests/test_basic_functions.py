@@ -6,9 +6,9 @@ from typing import Dict
 
 import pandas as pd
 
-from PySwaggerAPIWrap.api_filter import APIDataFrameFilter
-from PySwaggerAPIWrap.api_route import APIRoute
-from PySwaggerAPIWrap.http_client import HttpClient
+from pyswaggerapiwrap.api_filter import APIDataFrameFilter
+from pyswaggerapiwrap.api_route import APIRoute
+from pyswaggerapiwrap.http_client import HttpClient
 
 ENDPOINT = "https://petstore.swagger.io/v2"
 AUTH_TOKEN = "special-key"
