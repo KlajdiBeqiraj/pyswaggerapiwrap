@@ -49,10 +49,10 @@ jobs:
         run: poetry build
 
       - name: Publish package to PyPI
-        run: |
-          poetry publish --build --username __token__ --password secrets.TWINE_TOKEN
         env:
-            GITHUB_TOKEN: ${{ secrets.TWINE_TOKEN }}
+          TWINE_TOKEN: ${{ secrets.TWINE_TOKEN }}
+        run: |
+          poetry publish --build --username __token__ --password TWINE_TOKEN
 
       - name: Push changes and tags
         run: |
