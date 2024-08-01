@@ -17,6 +17,9 @@ requests = "^2.32.3"
 pytest = "^8.3.2"
 
 
+[tool.poetry.group.dev.dependencies]
+bump2version = "^1.0.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
