@@ -20,3 +20,6 @@ pytest = "^8.3.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dev-dependencies]
+bump2version = "^1.0.1"
