@@ -11,14 +11,14 @@ with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="PySwaggerAPIWrap",
+    name="pyswaggerapiwrap",
     version="0.1.4",
     description="A Python wrapper for API services that enables Swagger integration.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Klajdi Beqiraj",
     author_email="klajdibeqiraj96@gmail.com",
-    url="https://github.com/KlajdiBeqiraj/PySwaggerAPIWrap.git",
+    url="https://github.com/KlajdiBeqiraj/pyswaggerapiwrap.git",
     packages=find_packages(),
     install_requires=[],
     classifiers=[
