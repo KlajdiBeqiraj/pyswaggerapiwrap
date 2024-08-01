@@ -52,7 +52,7 @@ jobs:
         env:
           TWINE_TOKEN: ${{ secrets.TWINE_TOKEN }}
         run: |
-          poetry publish --build --username __token__ --password TWINE_TOKEN
+          poetry publish --username __token__ --password TWINE_TOKEN
 
       - name: Push changes and tags
         run: |
