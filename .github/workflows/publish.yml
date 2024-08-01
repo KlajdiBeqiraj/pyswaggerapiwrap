@@ -10,13 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: List available Python versions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3
+          python3 --version
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.8'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Poetry and bump2version
         run: |
