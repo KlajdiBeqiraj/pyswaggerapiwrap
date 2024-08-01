@@ -5,25 +5,18 @@ Http client
 from typing import Optional
 
 import requests  # pylint: disable=import-error
+from pydantic import BaseModel, Field
 
 from PySwaggerAPIWrap.utils import find_swagger_json, get_swagger_df
 
 
-class HttpClient:
+class HttpClient(BaseModel):
     """
     A class to handle HTTP requests with authentication.
     """
 
-    def __init__(self, base_url: str, auth_token: str):
-        """
-        Initialize the HttpClient with a base URL and an authentication token.
-
-        Args:
-            base_url (str): The base URL for the HTTP requests.
-            auth_token (str): The authentication token for the requests.
-        """
-        self.base_url = base_url
-        self.auth_token = auth_token
+    base_url: str = Field(..., description="Base route for APIs")
+    auth_token: str = Field(..., description="Auth token")
 
     def _get_headers(self) -> dict:
         """

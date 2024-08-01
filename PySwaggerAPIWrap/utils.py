@@ -7,20 +7,7 @@ from copy import deepcopy
 import pandas as pd  # pylint: disable=import-error
 import requests  # pylint: disable=import-error
 
-from PySwaggerAPIWrap import AdditionalAPISContainer
-
-
-def log_function_name(func):
-    """
-    Decorator to log the name of the function being called.
-    """
-
-    def wrapper(*args, **kwargs):
-        # Log the function name
-        print(f"WebApiHandler calling: {func.__name__}")
-        return func(*args, **kwargs)
-
-    return wrapper
+from PySwaggerAPIWrap.additional_apis import AdditionalAPISContainer
 
 
 def add_additional_apis_to_df(routes_df: pd.DataFrame):
@@ -37,23 +24,21 @@ def add_additional_apis_to_df(routes_df: pd.DataFrame):
     routes_df_2 = deepcopy(routes_df)
 
     # Iterate over each additional API configuration
-    for key in AdditionalAPISContainer.ADDITIONAL_APIS:
-        additional_dict = AdditionalAPISContainer.ADDITIONAL_APIS[key]
-
+    for additional_api in AdditionalAPISContainer.ADDITIONAL_APIS.values():
         # Find the row that matches the original route and method
         new_api_df = deepcopy(
             routes_df_2[
-                (routes_df_2["route"] == additional_dict.original_route)
-                & (routes_df_2["method"] == additional_dict.method)
+                (routes_df_2["route"] == additional_api.original_route)
+                & (routes_df_2["method"] == additional_api.method)
             ].iloc[0]
         )
 
         # Update the route and remove fixed route parameters
-        new_api_df["route"] = additional_dict.new_route
+        new_api_df["route"] = additional_api.new_route
         new_api_df["parameters"] = [
             param
             for param in new_api_df["parameters"]
-            if param["name"] not in list(additional_dict.fixed_route_params.keys())
+            if param["name"] not in list(additional_api.fixed_route_params.keys())
         ]
 
         # Append the new API to the DataFrame

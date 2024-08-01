@@ -4,6 +4,8 @@ Api Filter
 
 from __future__ import annotations
 
+from copy import deepcopy
+
 import pandas as pd
 
 from PySwaggerAPIWrap.api_route import APIRoute
@@ -24,7 +26,7 @@ class APIDataFrameFilter:
         Args:
             dataframe (pd.DataFrame): The DataFrame containing API route data.
         """
-        self.df_object = dataframe
+        self.df_object = deepcopy(dataframe)
         # Add 'api_route' column if it does not exist, converting rows to APIRoute objects.
         if "api_route" not in self.df_object.columns:
             self.df_object["api_route"] = self.df_object.apply(
@@ -237,7 +239,7 @@ class APIDataFrameFilter:
             None or APIRoute: The APIRoute object if
             found; otherwise, None.
         """
-        from PySwaggerAPIWrap import AdditionalAPISContainer
+        from PySwaggerAPIWrap.additional_apis import AdditionalAPISContainer
 
         if key in AdditionalAPISContainer.ADDITIONAL_APIS:
             route = AdditionalAPISContainer.ADDITIONAL_APIS[key].new_route

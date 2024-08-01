@@ -2,7 +2,6 @@
 Api Route and Api params
 """
 
-
 import keyword
 from copy import deepcopy
 

@@ -150,3 +150,95 @@ data
 
 
 ```
+
+
+# Save and reload the status
+**PySwaggerAPIWrap** allows you to save the state of the package so that you don't have to wrap the documentation from
+the swagger each time but load it from file directly. Of course, if the API state changes, you will have
+to save the updated state again.
+
+### Example of Use
+
+Below you will find an explanation of how to do it (find the same example in the notebook called `status_save_and_reload`).
+
+First, let's go configure the variables as done in the previous tutorial:
+
+```python
+ENDPOINT = "https://petstore.swagger.io/v2"
+AUTH_TOKEN = "special-key"
+
+http_client = HttpClient(base_url=ENDPOINT, auth_token=AUTH_TOKEN)
+routes_dict = http_client.get_routes_df(swagger_route="/swagger.json")
+
+api_filter = APIDataFrameFilter(routes_dict)
+```
+
+Save the status
+```python
+from PySwaggerAPIWrap.status import Status, save_status, load_status
+
+file_path = os.path.join("resources", "saved_data", "status.psw")
+save_status(file_path, http_client=http_client, routes_dict=routes_dict)
+
+```
+
+Similarly, we can reload status in this way:
+```python
+new_api_filter, new_http_client = load_status(file_path)
+```
+
+### Compared original objects with the reloaded objects
+1. Run original api
+```python
+api_filter.store.get_inventory.run(http_client)
+```
+
+```json
+{'sold': 9,
+ '66363': 2,
+ 'BPksnQx1oalC9IhhUfUc4lpFlfB0rht0N8IJsBgthNaqdrj43uk0YX48yzYadN81gZAYYDEjTBaqMOhLogiBmZbAoh1sVuN77FPmnKSpMrgsv3lsBFbFyNOBRbY4QllcbvR6OtnK0gsYKmp2uaGwx9E5dWLSd0KcT2O6jfWBqlf1WUXOJ3y1tSevyIN2RBio2Pv4VQqV4g2qFmiMeCLnESxnLY4Y37PbS4d8sGyp9HmdYGSPcABDQUZhjzva7qI': 2,
+ 'string': 262,
+ 'pKEOm5831.422150269268744D4W': 2,
+ '46673': 2,
+ 'pending': 3,
+ 'available': 349,
+ '6RVyxbvDJeoCKjOfsGaGPvABhe4c8FdSO14XolrcUVZR4eczMiL0JSll02CbDLzry9B21plW5mO9j7RmDdKAUFZ35mjVJuB39kZUdzvHsltJ4HwzeYV29U2Qdy8ICD9d4HBEbc8VR0qkwettCs7N5tp9HB9cpZq15lf5wiVu3qpJWiqQqLNMmC1ITLUK26JCkr0WOYpJKKyulerTdx36PLzsVKGaJDVnzQ16jOOAYqQI5UjICxTWvYYYjvtoH401CvYrYivyu2LQmPOcKxe4YUtAbzKbHYl8V3yTINJKzlpmviHgEkkJNbk3HpBvobnpyG27Gi92fubcXvGpfDXIMftwRMTWsEbIfoS89KvjXMoXTRNV91D1s974yLatX4R7qw05bGCHT1S7wig6MpAdhBKABTqw9Zd0854QfdyGDR9XCwc2NUoAfSlIC5nKLDzBNBujQw0W7TIHZq3aaSvwEtUxBouXAnHGkK6i31irXIRDJvQrTq9nfKRWamCh2JyCIQ4MHqJ9qW8ONGgxYMGTeCYmAzDzoF5fciFLSgYGYC7R2ntr6JYH3RcIh64O92VPZnhUMwhivVkdofQUCuXemQqp1uwBsERVOKoEaoRQbkUl5PZw7I7cCc8THLddOr5aH0dWoZ4QuwxwlDD3WvlvC9Y70NRYdiPYUIPJzc9VHKGVfZYzRKC8TBBarqFQOKU0hLiVcrSSeqkml0GyAnglvEoXmxO78imPk6V3QACkBbO60JrWX7V91eimlg3dWmnggGLVPTXZeoL0bmGNgq8PGgnhuvr0AHchSqrxx2BQF0wyv6npnT80NEW6fEdLd17X1AsVVd8FLAdAD3trMJikzoE8LkGKsHS2S3MDY6WhpIXwkXoEIECu18tG3gVonMIdKJzQwkouIL6tzQBViSp8DBmxKfnkssPdIUCTHTxUwd6wOgWlgJoAqO4u7cquxDg4rQjXhqdeGY2PScKpc3H9Y0VfD12r1HTABAEDoMR6': 2,
+ 'wlcwbJFw1P': 2,
+ 'oNw0': 12,
+ 'peric': 1,
+ 'fT42D6BZdm': 1,
+ 'SOLD': 1,
+ '=2': 2,
+ 'invalid_status': 1,
+ ':2': 2,
+ '8ENF31Ir0tRE0lnm1jPgXzIr4DU8DfOjzVlZP8YoVGSBsdvTltw8G19o9n5DQed0N1spqY98Aix2Bvi2iX3NuwYvIiPe1CNCBzzqXL25MH5YXEbtHnvS4Us4VSUUDMlXJNpHbWrPId4aQ9r8xsZPht2yXnLTfKbb5YKaj7ordOOFE0BQTyBjxJ589H2JdoOEuxle5lwceB2BRHQVW2xRWrwBXany3OxBAezieFyFjh5bMSbabpTHCXdFuUKoDdAGxOWrsXcsCYFiFEoO1EArxYUcZsgk4l0IPvOauVmKOvhlE3xhyW3L7H1IZGTRsrpaVwAvofNi3W4rKrbRS2Fcv56374lNcrnxJsE1N3BaLzBWfej8WCXjIhZxEkkZsSDz1P5cAF0yegCSrxvQss21rDiWmnfYB58ouXrJBw0sMa7tbSHzIJJ2ZyALXCQrcdkSmLDtg4IiTb3WgmuogJ2oe4tK2j21bbTgA8j6HwENOWVRDctSwJ3hXxu8jPhyNaxxLz8VMiaunNksQdMTZjBsbpeM53WEbrKLpNCTEqTQJpDxJ2cgZOpfiqh3YW54raVy94iqhIEcDvszynU4wJzkryRT7SFOIqpDrBvCdPSEwqcnBzqajIvCIka9CS7fl3o0uOyLVBoADrApxuuSxqB4EKggBCwnL5nw5hUoQ3MGExBUTDJ8BUrIETCIyaGrkYawPmkJbow8IkZy1d9g3tqpk2Qj2PdD3OGFo3SruYuwwdeSnkBKqPzLclh11xIehM8DrZRgADyCeusL5VPFFWKYKIXDEa7Fk5My74JG9Wqenn20IHY3FlGbLodUJQqZn7arh0htQoGUn2iHJJrKVzysgBVGKZmQtsA8UfmcdQyE2yqvdXSb68MMKqm3EZ9Gf3dIseQF5TZoEpi1ad9uewofRAAhwTo7V4uBobGHLawazVeL2xYGt8Emryk9v563lXSDkCo6nF5JnsDWgOK7GvRxh8DcuwofaWE03Q1p0pkD': 2,
+ 'j8rUgCA680.50590458135171.60975683573379370N77C': 2}
+```
+
+
+2. Run reloaded api
+```python
+new_api_filter.store.get_inventory.run(new_http_client)
+```
+
+```json
+{'sold': 9,
+ '66363': 2,
+ 'BPksnQx1oalC9IhhUfUc4lpFlfB0rht0N8IJsBgthNaqdrj43uk0YX48yzYadN81gZAYYDEjTBaqMOhLogiBmZbAoh1sVuN77FPmnKSpMrgsv3lsBFbFyNOBRbY4QllcbvR6OtnK0gsYKmp2uaGwx9E5dWLSd0KcT2O6jfWBqlf1WUXOJ3y1tSevyIN2RBio2Pv4VQqV4g2qFmiMeCLnESxnLY4Y37PbS4d8sGyp9HmdYGSPcABDQUZhjzva7qI': 2,
+ 'string': 264,
+ 'pKEOm5831.422150269268744D4W': 2,
+ '46673': 2,
+ 'pending': 3,
+ 'available': 349,
+ '6RVyxbvDJeoCKjOfsGaGPvABhe4c8FdSO14XolrcUVZR4eczMiL0JSll02CbDLzry9B21plW5mO9j7RmDdKAUFZ35mjVJuB39kZUdzvHsltJ4HwzeYV29U2Qdy8ICD9d4HBEbc8VR0qkwettCs7N5tp9HB9cpZq15lf5wiVu3qpJWiqQqLNMmC1ITLUK26JCkr0WOYpJKKyulerTdx36PLzsVKGaJDVnzQ16jOOAYqQI5UjICxTWvYYYjvtoH401CvYrYivyu2LQmPOcKxe4YUtAbzKbHYl8V3yTINJKzlpmviHgEkkJNbk3HpBvobnpyG27Gi92fubcXvGpfDXIMftwRMTWsEbIfoS89KvjXMoXTRNV91D1s974yLatX4R7qw05bGCHT1S7wig6MpAdhBKABTqw9Zd0854QfdyGDR9XCwc2NUoAfSlIC5nKLDzBNBujQw0W7TIHZq3aaSvwEtUxBouXAnHGkK6i31irXIRDJvQrTq9nfKRWamCh2JyCIQ4MHqJ9qW8ONGgxYMGTeCYmAzDzoF5fciFLSgYGYC7R2ntr6JYH3RcIh64O92VPZnhUMwhivVkdofQUCuXemQqp1uwBsERVOKoEaoRQbkUl5PZw7I7cCc8THLddOr5aH0dWoZ4QuwxwlDD3WvlvC9Y70NRYdiPYUIPJzc9VHKGVfZYzRKC8TBBarqFQOKU0hLiVcrSSeqkml0GyAnglvEoXmxO78imPk6V3QACkBbO60JrWX7V91eimlg3dWmnggGLVPTXZeoL0bmGNgq8PGgnhuvr0AHchSqrxx2BQF0wyv6npnT80NEW6fEdLd17X1AsVVd8FLAdAD3trMJikzoE8LkGKsHS2S3MDY6WhpIXwkXoEIECu18tG3gVonMIdKJzQwkouIL6tzQBViSp8DBmxKfnkssPdIUCTHTxUwd6wOgWlgJoAqO4u7cquxDg4rQjXhqdeGY2PScKpc3H9Y0VfD12r1HTABAEDoMR6': 2,
+ 'wlcwbJFw1P': 2,
+ 'oNw0': 12,
+ 'peric': 1,
+ 'fT42D6BZdm': 1,
+ 'SOLD': 1,
+ '=2': 2,
+ 'invalid_status': 1,
+ ':2': 2,
+ '8ENF31Ir0tRE0lnm1jPgXzIr4DU8DfOjzVlZP8YoVGSBsdvTltw8G19o9n5DQed0N1spqY98Aix2Bvi2iX3NuwYvIiPe1CNCBzzqXL25MH5YXEbtHnvS4Us4VSUUDMlXJNpHbWrPId4aQ9r8xsZPht2yXnLTfKbb5YKaj7ordOOFE0BQTyBjxJ589H2JdoOEuxle5lwceB2BRHQVW2xRWrwBXany3OxBAezieFyFjh5bMSbabpTHCXdFuUKoDdAGxOWrsXcsCYFiFEoO1EArxYUcZsgk4l0IPvOauVmKOvhlE3xhyW3L7H1IZGTRsrpaVwAvofNi3W4rKrbRS2Fcv56374lNcrnxJsE1N3BaLzBWfej8WCXjIhZxEkkZsSDz1P5cAF0yegCSrxvQss21rDiWmnfYB58ouXrJBw0sMa7tbSHzIJJ2ZyALXCQrcdkSmLDtg4IiTb3WgmuogJ2oe4tK2j21bbTgA8j6HwENOWVRDctSwJ3hXxu8jPhyNaxxLz8VMiaunNksQdMTZjBsbpeM53WEbrKLpNCTEqTQJpDxJ2cgZOpfiqh3YW54raVy94iqhIEcDvszynU4wJzkryRT7SFOIqpDrBvCdPSEwqcnBzqajIvCIka9CS7fl3o0uOyLVBoADrApxuuSxqB4EKggBCwnL5nw5hUoQ3MGExBUTDJ8BUrIETCIyaGrkYawPmkJbow8IkZy1d9g3tqpk2Qj2PdD3OGFo3SruYuwwdeSnkBKqPzLclh11xIehM8DrZRgADyCeusL5VPFFWKYKIXDEa7Fk5My74JG9Wqenn20IHY3FlGbLodUJQqZn7arh0htQoGUn2iHJJrKVzysgBVGKZmQtsA8UfmcdQyE2yqvdXSb68MMKqm3EZ9Gf3dIseQF5TZoEpi1ad9uewofRAAhwTo7V4uBobGHLawazVeL2xYGt8Emryk9v563lXSDkCo6nF5JnsDWgOK7GvRxh8DcuwofaWE03Q1p0pkD': 2,
+ 'j8rUgCA680.50590458135171.60975683573379370N77C': 2}
+```

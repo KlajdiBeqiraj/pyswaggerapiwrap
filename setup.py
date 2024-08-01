@@ -5,7 +5,6 @@ for any API documented via Swagger, making it simpler to
 integrate and utilize APIs in your code.
 """
 
-
 from setuptools import find_packages, setup
 
 with open("README.md", encoding="utf-8") as f:
