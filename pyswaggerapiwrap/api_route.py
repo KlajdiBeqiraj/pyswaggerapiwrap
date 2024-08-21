@@ -4,6 +4,7 @@ Api Route and Api params
 
 import keyword
 from copy import deepcopy
+from typing import Dict, Optional
 
 import numpy as np
 
@@ -223,11 +224,13 @@ class APIRoute:
         self,
         http_client: HttpClient,
         route_params=None,
+        request_data: Optional[Dict] = None
     ):
         """
         Execute the API call with the given parameters.
 
         Args:
+            request_data: body for the post request
             http_client (HttpClient): The HTTP client to use for making requests.
             route_params (Optional[dict]): Parameters to
             include in the route and query string.
@@ -261,7 +264,7 @@ class APIRoute:
         if self.method == "GET":
             return http_client.get(route=route_with_params)
         if self.method == "POST":
-            return http_client.post(route=route_with_params)
+            return http_client.post(route=route_with_params, request_data=request_data)
 
         raise ValueError(f"Method {self.method} not yet implemented")
 

@@ -31,11 +31,17 @@ class HttpClient(BaseModel):
             "Content-Type": "application/json",
         }
 
-    def get(self, route: str, request_data=None, timeout: int = 5) -> dict:
+    def get(self,
+            route: str,
+            request_data=None,
+            timeout: int = 5,
+            body: Optional[dict] = None
+            ) -> dict:
         """
         Perform a GET request to the specified route.
 
         Args:
+            body (dict): body of the request
             route (str): The route to append to the base URL for the request.
             request_data (Optional[dict]): Optional query parameters for the request.
             timeout (int): The timeout duration for the request in seconds.
@@ -52,12 +58,16 @@ class HttpClient(BaseModel):
 
         headers = self._get_headers()
         response = requests.get(
-            url, headers=headers, params=request_data, timeout=timeout, verify=False
+            url, headers=headers, params=request_data, timeout=timeout, verify=False,
+            json=body
         )
         response.raise_for_status()
         return response.json()
 
-    def post(self, route: str, request_data=None, timeout: int = 5) -> dict:
+    def post(self,
+             route: str,
+             request_data: Optional[dict] = None,
+             timeout: int = 5, ) -> dict:
         """
         Perform a POST request to the specified route.
 
