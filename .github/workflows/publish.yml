@@ -35,12 +35,20 @@ jobs:
           poetry install
           poetry add --dev bump2version
 
-      - name: Add and commit changes
+      - name: Commit changes
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          
+          # Aggiungi i file
           git add pyproject.toml poetry.lock
-          git commit -m "Update dependencies"
+          
+          # Controlla se ci sono cambiamenti
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update dependencies"
+          fi
 
       - name: Bump version
         run: |
