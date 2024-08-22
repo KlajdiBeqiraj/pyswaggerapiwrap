@@ -40,10 +40,8 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           
-          # Aggiungi i file
           git add pyproject.toml poetry.lock
           
-          # Controlla se ci sono cambiamenti
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
