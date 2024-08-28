@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyswaggerapiwrap"
-version = "0.1.8"
+version = "0.1.9"
 description = "Python wrapper for api with a swagger"
 authors = ["KlajdiBeqiraj <k.beqiraj@myw.ai>"]
 license = "MIT License"
