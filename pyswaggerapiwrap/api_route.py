@@ -224,12 +224,14 @@ class APIRoute:
         self,
         http_client: HttpClient,
         route_params=None,
-        request_data: Optional[Dict] = None
+        request_data: Optional[Dict] = None,
+        **kwargs
     ):
         """
         Execute the API call with the given parameters.
 
         Args:
+            kwargs: kwargs arguments for request
             request_data: body for the post request
             http_client (HttpClient): The HTTP client to use for making requests.
             route_params (Optional[dict]): Parameters to
@@ -262,9 +264,9 @@ class APIRoute:
             route_with_params += f"?{query_string}"
 
         if self.method == "GET":
-            return http_client.get(route=route_with_params)
+            return http_client.get(route=route_with_params, **kwargs)
         if self.method == "POST":
-            return http_client.post(route=route_with_params, request_data=request_data)
+            return http_client.post(route=route_with_params, request_data=request_data, **kwargs)
 
         raise ValueError(f"Method {self.method} not yet implemented")
 
